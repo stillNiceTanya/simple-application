@@ -5,12 +5,6 @@ import List from '../List';
 import { renderWithProviders } from '../../../utils/test-utils';
 import { FetchStatus, Filter } from '../../../redux/types';
 
-interface Todo {
-    id: string | number;
-    title: string;
-    completed: boolean;
-  }
-
 const initialTodos = {
   todos: [],
   currentFilter: 'all' as Filter,
@@ -80,8 +74,6 @@ test('should render List component with todos', () => {
     expect(screen.queryByText('Todo 1')).not.toBeInTheDocument();
     expect(screen.queryByText('Todo 2')).not.toBeInTheDocument();
   });
-
-
 
   
   
