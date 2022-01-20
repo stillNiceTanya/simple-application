@@ -11,6 +11,8 @@ import styles from './List.module.css';
 const List = () => {
   const fetchStatus = useAppSelector((state) => state.todos.fetchStatus);
 
+  const dispatch = useAppDispatch();
+  
   const currentTodos = useAppSelector((state) => {
     const { todos, currentFilter } = state.todos;
     switch (currentFilter) {
@@ -23,7 +25,6 @@ const List = () => {
     }
   });
 
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (fetchStatus === 'idle') {
