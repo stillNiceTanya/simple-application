@@ -68,4 +68,20 @@ test('should render List component with todos', () => {
     expect(screen.queryByText('Todo 1')).not.toBeInTheDocument();
   });
   
+
+  test('should render only active todos when filter is set to "active"', () => {
+  
+    renderWithProviders(<List />, {
+      preloadedState: {
+        todos: { ...initialTodos, fetchStatus: 'success', currentFilter: 'active' },
+      },
+    });
+  
+    expect(screen.queryByText('Todo 1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Todo 2')).not.toBeInTheDocument();
+  });
+
+
+
+  
   
