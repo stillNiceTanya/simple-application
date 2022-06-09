@@ -5,6 +5,12 @@ import List from '../List';
 import { renderWithProviders } from '../../../utils/test-utils';
 import { FetchStatus, Filter } from '../../../redux/types';
 
+interface Todo {
+    id: string | number;
+    title: string;
+    completed: boolean;
+  }
+
 const initialTodos = {
   todos: [],
   currentFilter: 'all' as Filter,
@@ -30,3 +36,13 @@ test('should render List component when error occurs', () => {
 
   expect(screen.getByText('Loading error')).toBeInTheDocument();
 });
+
+test('should render List component with todos', () => {
+    renderWithProviders(<List />, {
+      preloadedState: {
+        todos: { ...initialTodos, fetchStatus: 'success' },
+      },
+    });
+  
+  });
+  
