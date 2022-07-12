@@ -45,4 +45,16 @@ test('should render List component with todos', () => {
     });
   
   });
+
+  test('should render List component with no todos', () => {
+    renderWithProviders(<List />, {
+      preloadedState: {
+        todos: { ...initialTodos, fetchStatus: 'success' },
+      },
+    });
+  
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.queryByText('Loading error')).not.toBeInTheDocument();
+  });
+  
   
