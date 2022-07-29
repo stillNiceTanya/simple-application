@@ -57,4 +57,15 @@ test('should render List component with todos', () => {
     expect(screen.queryByText('Loading error')).not.toBeInTheDocument();
   });
   
+  test('should render only completed todos when filter is set to "completed"', () => {
+  
+    renderWithProviders(<List />, {
+      preloadedState: {
+        todos: { ...initialTodos, fetchStatus: 'success', currentFilter: 'completed' },
+      },
+    });
+  
+    expect(screen.queryByText('Todo 1')).not.toBeInTheDocument();
+  });
+  
   
