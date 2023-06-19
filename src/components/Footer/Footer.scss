@@ -11,9 +11,8 @@
     0 10px 1px -4px rgba(0, 0, 0, 0.15), 0 20px 0 -10px #eee,
     0 20px 1px -9px rgba(0, 0, 0, 0.15);
 
-  & button {
-    display: flex;
-    align-items: center;
+  button {
+    cursor: pointer;
     margin: 0 5px;
     padding: 6px;
     border: 1px solid rgb(249, 249, 249);
