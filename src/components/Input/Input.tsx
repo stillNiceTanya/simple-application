@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './Input.scss';
-import { useAppDispatch } from '../../hook';
-import { useState, useLayoutEffect, useRef } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { useState } from 'react';
 import { addTodo } from '../../redux/reducers/todoReducer';
 
 const Input: React.FC = () => {
   const dispatch = useAppDispatch();
-  const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState('');
 
-  useLayoutEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value);
+    },
+    []
+  );
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter' && value !== '') {
+        dispatch(addTodo(value));
+        setValue('');
+      }
+    },
+    [dispatch, value]
+  );
 
   return (
     <>
@@ -22,16 +32,9 @@ const Input: React.FC = () => {
         className='todo-input'
         placeholder='What needs to be done?'
         value={value}
-        ref={inputRef}
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' && value !== '') {
-            dispatch(addTodo(value));
-            setValue('');
-          }
-        }}
+        autoFocus
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
       />
     </>
   );

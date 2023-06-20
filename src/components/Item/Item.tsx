@@ -1,41 +1,43 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+
+import type { Todo } from '../../redux/reducers/todoReducer';
+
 import './Item.scss';
-import { FaRegCheckCircle } from 'react-icons/fa';
-import { FaRegCircle } from 'react-icons/fa';
-import { useAppDispatch } from '../../hook';
-import { setCompleted } from '../../redux/reducers/todoReducer';
+import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
+
+import { useAppDispatch } from '../../hooks';
+import { setIsCompleted } from '../../redux/reducers/todoReducer';
 
 interface ItemProps {
-  id: string;
-  text: string;
-  completed: boolean;
+  todo: Todo;
 }
 
-const Item: React.FC<ItemProps> = ({ text, completed, id }) => {
+const Item: React.FC<ItemProps> = ({ todo }) => {
+  const { id, text, isCompleted } = todo;
   const dispatch = useAppDispatch();
 
-  const IconComponent = completed ? FaRegCheckCircle : FaRegCircle;
+  const IconComponent = isCompleted ? FaRegCheckCircle : FaRegCircle;
+
+  const handleClick = useCallback(() => {
+    dispatch(setIsCompleted({ id, isCompleted: !isCompleted }));
+  }, [dispatch, id, isCompleted]);
 
   return (
-    <>
-      <div className='todo-item'>
-        <div className='todo-icon__container'>
-          <IconComponent
-            className='todo-item__icon'
-            onClick={() => {
-              dispatch(setCompleted(id));
-            }}
-          />
-        </div>
-        <span
-          className={
-            completed ? 'todo-item__text completed' : 'todo-item__text'
-          }
-        >
-          {text}
-        </span>
+    <div className='todo-item'>
+      <div className='todo-icon__container'>
+        <IconComponent
+          className='todo-item__icon'
+          onClick={handleClick}
+        />
       </div>
-    </>
+      <span
+        className={
+          isCompleted ? 'todo-item__text completed' : 'todo-item__text'
+        }
+      >
+        {text}
+      </span>
+    </div>
   );
 };
 

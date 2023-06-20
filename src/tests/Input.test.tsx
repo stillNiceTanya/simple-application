@@ -11,5 +11,6 @@ test('Input renders without crashing and contains placeholder which has focus on
     </Provider>
   );
   const inputField = screen.getByPlaceholderText('What needs to be done?');
+
   expect(inputField).toHaveFocus();
 });

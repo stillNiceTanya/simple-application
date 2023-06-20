@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 20px 0 20px 50px;
+  padding: 20px 0 20px 40px;
   background-color: rgb(249, 249, 249);
   border-bottom: 1px solid rgba(172, 172, 172, 0.231);
 
@@ -12,10 +12,13 @@
 
   &__icon {
     cursor: pointer;
-    position: absolute;
-    left: -10px;
     width: 20px;
     height: 20px;
+  }
+
+  &__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__text.completed {
@@ -33,4 +36,5 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-right: 10px;
 }

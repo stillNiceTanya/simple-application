@@ -1,24 +1,27 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Todo {
+export interface Todo {
   id: string;
   text: string;
-  completed: boolean;
+  isCompleted: boolean;
 }
+
+export type Filter = 'all' | 'active' | 'completed';
 
 interface TodoState {
   todos: Todo[];
-  activeTodos: Todo[];
-  completedTodos: Todo[];
-  currentTodos: Todo[];
+  currentFilter: Filter;
+}
+
+interface SetCompletedPayload {
+  id: string;
+  isCompleted: boolean;
 }
 
 const initialState: TodoState = {
   todos: [],
-  activeTodos: [],
-  completedTodos: [],
-  currentTodos: [],
+  currentFilter: 'all',
 };
 
 const todoSlice = createSlice({
@@ -29,64 +32,35 @@ const todoSlice = createSlice({
       const newTodo = {
         id: uuidv4(),
         text: action.payload,
-        completed: false,
+        isCompleted: false,
       };
+
       state.todos.push(newTodo);
-      state.activeTodos.push(newTodo);
-      state.currentTodos = state.todos;
     },
-    setCompleted(state, action: PayloadAction<string>) {
-      const todo = state.todos.find((todo) => todo.id === action.payload);
 
-      if (todo?.completed === false) {
-        todo.completed = !todo.completed;
-        state.activeTodos = state.activeTodos.filter(
-          (item) => item.id !== todo.id
-        );
-        state.completedTodos.push(todo);
-      } else {
-        if (todo?.completed === true) {
-          todo.completed = !todo.completed;
-          state.completedTodos = state.completedTodos.filter(
-            (item) => item.id !== todo.id
-          );
-          state.activeTodos.push(todo);
-        }
-      }
-      const currentTodo = state.currentTodos.find(
-        (todo) => todo.id === action.payload
-      );
-      if (currentTodo) {
-        currentTodo.completed = !currentTodo.completed;
+    setIsCompleted(state, action: PayloadAction<SetCompletedPayload>) {
+      const todo = state.todos.find((todo) => todo.id === action.payload.id);
+
+      if (todo) {
+        todo.isCompleted = action.payload.isCompleted;
       }
     },
-    showAll(state) {
-      state.currentTodos = state.todos;
+
+    setFilter(state, action: PayloadAction<Filter>) {
+      state.currentFilter = action.payload;
     },
-    showActive(state) {
-      state.currentTodos = state.activeTodos;
-    },
-    showCompleted(state) {
-      state.currentTodos = state.completedTodos;
-    },
+
     clearCompleted(state) {
-      state.completedTodos.length = 0;
+      state.todos = state.todos.filter((todo) => !todo.isCompleted);
 
-      state.todos = state.todos.filter((todo) => todo.completed === false);
-
-      state.activeTodos = [...state.todos];
-      state.currentTodos = state.todos;
+      if (state.currentFilter === 'completed') {
+        state.currentFilter = 'all';
+      }
     },
   },
 });
 
-export const {
-  addTodo,
-  setCompleted,
-  showAll,
-  showActive,
-  showCompleted,
-  clearCompleted,
-} = todoSlice.actions;
+export const { addTodo, setFilter, setIsCompleted, clearCompleted } =
+  todoSlice.actions;
 
 export default todoSlice.reducer;

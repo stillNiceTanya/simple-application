@@ -1,30 +1,36 @@
-import Item from '../Item/Item';
 import React from 'react';
 
-interface Todo {
-  id: string;
-  text: string;
-  completed: boolean;
-}
+import './List.scss';
+import Item from '../Item/Item';
 
-interface ListProps {
-  todos: Todo[];
-}
+import { useAppSelector } from '../../hooks';
 
-const List: React.FC<ListProps> = ({ todos }) => {
+const List: React.FC = () => {
+  const currentTodos = useAppSelector((state) => {
+    const { todos, currentFilter } = state.todos;
+    switch (currentFilter) {
+      case 'active':
+        return todos.filter((todo) => !todo.isCompleted);
+      case 'completed':
+        return todos.filter((todo) => todo.isCompleted);
+      default:
+        return todos;
+    }
+  });
+
   return (
-    <div>
-      {todos.map((todo) => {
-        return (
-          <Item
-            key={todo.id}
-            id={todo.id}
-            text={todo.text}
-            completed={todo.completed}
-          />
-        );
-      })}
-    </div>
+    <ul className='todo-list'>
+      <li>
+        {currentTodos.map((todo) => {
+          return (
+            <Item
+              key={todo.id}
+              todo={todo}
+            />
+          );
+        })}
+      </li>
+    </ul>
   );
 };
 
