@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { fetchTodosData } from '../../redux/reducers/todoReducer';
+import { useAppDispatch } from '../../hooks';
 
 import './List.scss';
 import Item from '../Item/Item';
@@ -9,14 +12,20 @@ const List: React.FC = () => {
   const currentTodos = useAppSelector((state) => {
     const { todos, currentFilter } = state.todos;
     switch (currentFilter) {
-      case 'active':
-        return todos.filter((todo) => !todo.isCompleted);
-      case 'completed':
-        return todos.filter((todo) => todo.isCompleted);
-      default:
-        return todos;
+    case 'active':
+      return todos.filter((todo) => !todo.completed);
+    case 'completed':
+      return todos.filter((todo) => todo.completed);
+    default:
+      return todos;
     }
   });
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodosData());
+  }, [dispatch]);
 
   return (
     <ul className='todo-list'>

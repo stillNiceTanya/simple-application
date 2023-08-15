@@ -11,5 +11,5 @@ test('App renders without errors', () => {
     </Provider>
   );
 
-  expect(screen.getByText('todos')).toBeInTheDocument();
+  expect(screen.getByText('todos Jampad')).toBeInTheDocument();
 });

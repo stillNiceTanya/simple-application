@@ -7,7 +7,7 @@ import List from './components/List/List';
 const App: React.FC = () => {
   return (
     <>
-      <header className='header__title'>todos</header>
+      <header className='header__title'>todos Jampad</header>
       <div className='content-wrapper'>
         <Input />
         <List />

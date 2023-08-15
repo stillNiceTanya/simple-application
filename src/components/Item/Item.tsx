@@ -1,26 +1,26 @@
 import React, { useCallback } from 'react';
 
-import type { Todo } from '../../redux/reducers/todoReducer';
 
 import './Item.scss';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 
 import { useAppDispatch } from '../../hooks';
 import { setIsCompleted } from '../../redux/reducers/todoReducer';
+import type { Todo } from '../../types';
 
 interface ItemProps {
   todo: Todo;
 }
 
 const Item: React.FC<ItemProps> = ({ todo }) => {
-  const { id, text, isCompleted } = todo;
+  const { id, title, completed } = todo;
   const dispatch = useAppDispatch();
 
-  const IconComponent = isCompleted ? FaRegCheckCircle : FaRegCircle;
+  const IconComponent = completed ? FaRegCheckCircle : FaRegCircle;
 
   const handleClick = useCallback(() => {
-    dispatch(setIsCompleted({ id, isCompleted: !isCompleted }));
-  }, [dispatch, id, isCompleted]);
+    dispatch(setIsCompleted({ id, completed: !completed }));
+  }, [dispatch, id, completed]);
 
   return (
     <div className='todo-item'>
@@ -32,10 +32,10 @@ const Item: React.FC<ItemProps> = ({ todo }) => {
       </div>
       <span
         className={
-          isCompleted ? 'todo-item__text completed' : 'todo-item__text'
+          completed ? 'todo-item__text completed' : 'todo-item__text'
         }
       >
-        {text}
+        {title}
       </span>
     </div>
   );

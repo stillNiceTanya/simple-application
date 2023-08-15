@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
   });
 
   const activeTodosCount = useAppSelector((state) => {
-    return state.todos.todos.filter((todo) => !todo.isCompleted).length;
+    return state.todos.todos.filter((todo) => !todo.completed).length;
   });
 
   const handleChangeFilter = useCallback(
