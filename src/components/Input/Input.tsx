@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../hooks';
 import { useState } from 'react';
 import { addTodo } from '../../redux/reducers/todoReducer';
 
-import './Input.scss';
+import styles from './Input.module.css';
 
 const Input = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const Input = () => {
   return (
     <input
       type='text'
-      className='todo-input'
+      className={styles.input}
       placeholder='What needs to be done?'
       value={value}
       autoFocus

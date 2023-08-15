@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks';
 import { toggleCompleted } from '../../redux/reducers/todoReducer';
 import type { Todo } from '../../redux/types';
 
-import './Item.scss';
+import styles from './Item.module.css';
 
 
 type ItemProps = {
@@ -23,15 +23,14 @@ const Item = ({ todo }: ItemProps) => {
   }, [dispatch, id]);
 
   return (
-    <div className='todo-item' onClick={handleClick}>
-      <div className='todo-icon__container'>
+    <div className={styles.container} onClick={handleClick}>
+      <div className={styles.iconContainer}>
         <IconComponent
-          className='todo-item__icon'
+          className={styles.icon}
         />
       </div>
       <span
-        className={
-          completed ? 'todo-item__text completed' : 'todo-item__text'
+        className={`${styles.item} ${completed ? styles.completed : ''}`
         }
       >
         {title}

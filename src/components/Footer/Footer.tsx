@@ -4,7 +4,7 @@ import type { Filter } from '../../redux/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setFilter, clearCompleted } from '../../redux/reducers/todoReducer';
 
-import './Footer.scss';
+import styles from './Footer.module.css';
 
 
 const Footer = () => {
@@ -32,17 +32,17 @@ const Footer = () => {
   if (!todosCount) return null;
 
   return (
-    <div className='todo-footer'>
-      <span className='todo-footer__count'>
+    <div className={styles.container}>
+      <span>
         {`${activeTodosCount} ${activeTodosCount === 1 ? 'item' : 'items'}`}{' '}
         left
       </span>
-      <div className='todo-footer__buttons'>
-        <button onClick={handleChangeFilter('all')}>All</button>
-        <button onClick={handleChangeFilter('active')}>Active</button>
-        <button onClick={handleChangeFilter('completed')}>Completed</button>
+      <div>
+        <button className={styles.button} onClick={handleChangeFilter('all')}>All</button>
+        <button className={styles.button} onClick={handleChangeFilter('active')}>Active</button>
+        <button className={styles.button} onClick={handleChangeFilter('completed')}>Completed</button>
       </div>
-      <button onClick={handleClearCompleted}>Clear completed</button>
+      <button className={styles.button} onClick={handleClearCompleted}>Clear completed</button>
     </div>
   );
 };

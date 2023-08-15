@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import { fetchTodosData } from '../../redux/reducers/todoReducer';
 import { useAppDispatch } from '../../hooks';
 
-import './List.scss';
 import Item from '../Item/Item';
-
 import { useAppSelector } from '../../hooks';
+
+import styles from './List.module.css';
 
 const List = () => {
   const fetchStatus = useAppSelector((state) => state.todos.fetchStatus);
@@ -42,17 +42,16 @@ const List = () => {
   }
 
   return (
-    <ul className='todo-list'>
-      <li>
-        {currentTodos.map((todo) => {
-          return (
+    <ul className={styles.list}>
+      {currentTodos.map((todo) => {
+        return (
+          <li key={todo.id}>
             <Item
-              key={todo.id}
               todo={todo}
             />
-          );
-        })}
-      </li>
+          </li>
+        );
+      })}
     </ul>
   );
 };

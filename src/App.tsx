@@ -2,13 +2,13 @@ import Footer from './components/Footer/Footer';
 import Input from './components/Input/Input';
 import List from './components/List/List';
 
-import './App.scss';
+import styles from './App.module.css';
 
 const App = () => {
   return (
     <>
-      <header className='header__title'>todos Jampad</header>
-      <div className='content-wrapper'>
+      <header className={styles.title}>todos Jampad</header>
+      <div className={styles.content}>
         <Input />
         <List />
         <Footer />
