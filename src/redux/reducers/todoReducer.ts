@@ -9,6 +9,11 @@ type TodosState = {
   fetchStatus: 'idle' | 'loading' | 'success' | 'error';
 };
 
+type UpdateTodoPayload = {
+  id: Todo['id'];
+  title: Todo['title'];
+};
+
 const initialState: TodosState = {
   todos: [],
   currentFilter: 'all',
@@ -33,6 +38,10 @@ const todoSlice = createSlice({
       state.todos.push(newTodo);
     },
 
+    deleteTodo(state, action: PayloadAction<Todo['id']>) {
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+    },
+
     toggleCompleted(state, action: PayloadAction<Todo['id']>) {
       const todo = state.todos.find((todo) => todo.id === action.payload);
 
@@ -52,6 +61,15 @@ const todoSlice = createSlice({
         state.currentFilter = 'all';
       }
     },
+
+    updateTodo(state, action: PayloadAction<UpdateTodoPayload>) {
+      const { id, title } = action.payload;
+      const todo = state.todos.find((todo) => todo.id === id);
+
+      if (todo) {
+        todo.title = title;
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -68,8 +86,14 @@ const todoSlice = createSlice({
   },
 });
 
-export const { addTodo, setFilter, toggleCompleted, clearCompleted } =
-  todoSlice.actions;
+export const {
+  addTodo,
+  deleteTodo,
+  setFilter,
+  toggleCompleted,
+  clearCompleted,
+  updateTodo,
+} = todoSlice.actions;
 
 export { fetchTodosData };
 

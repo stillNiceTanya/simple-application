@@ -1,8 +1,10 @@
 .container {
   width: 100%;
+  min-height: 80px;
   display: flex;
   align-items: center;
-  padding: 20px 0 20px 40px;
+  gap: 10px;
+  padding: 20px 20px 20px 40px;
   background-color: rgb(249, 249, 249);
   border-bottom: 1px solid rgba(172, 172, 172, 0.231);
   cursor: pointer;
@@ -21,7 +23,13 @@
   height: 20px;
 }
 
+.checked {
+  color: green
+}
+
 .item {
+  font-size: 2rem;
+  flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -40,5 +48,4 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-right: 10px;
 }
