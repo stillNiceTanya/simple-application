@@ -9,6 +9,8 @@ import Item from '../Item/Item';
 import { useAppSelector } from '../../hooks';
 
 const List: React.FC = () => {
+  const fetchStatus = useAppSelector((state) => state.todos.fetchStatus);
+
   const currentTodos = useAppSelector((state) => {
     const { todos, currentFilter } = state.todos;
     switch (currentFilter) {
@@ -24,8 +26,20 @@ const List: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchTodosData());
-  }, [dispatch]);
+    if (fetchStatus === 'idle') {
+      dispatch(fetchTodosData());
+    }
+  }, [fetchStatus, dispatch]);
+
+  if (fetchStatus === 'loading') {
+    // TODO: Добавить компонент загрузки
+    return <div>Loading...</div>
+  }
+
+  if (fetchStatus === 'error') {
+    // TODO: Добавить компонент ошибки
+    return <div>Error</div>
+  }
 
   return (
     <ul className='todo-list'>

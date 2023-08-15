@@ -8,16 +8,17 @@ export type Filter = 'all' | 'active' | 'completed';
 interface TodoState {
   todos: Todo[];
   currentFilter: Filter;
+  fetchStatus: 'idle' | 'loading' | 'success' | 'error';
 }
 
 interface SetCompletedPayload {
   id: number | string;
-  completed: boolean;
 }
 
 const initialState: TodoState = {
   todos: [],
   currentFilter: 'all',
+  fetchStatus: 'idle',
 };
 
 const fetchTodosData = createAsyncThunk('todos/fetchTodosData', async () => {
@@ -38,11 +39,11 @@ const todoSlice = createSlice({
       state.todos.push(newTodo);
     },
 
-    setIsCompleted(state, action: PayloadAction<SetCompletedPayload>) {
-      const todo = state.todos.find((todo) => todo.id === action.payload.id);
+    toggleCompleted(state, action: PayloadAction<Todo['id']>) {
+      const todo = state.todos.find((todo) => todo.id === action.payload);
 
       if (todo) {
-        todo.completed = action.payload.completed;
+        todo.completed = !todo.completed;
       }
     },
 
@@ -58,16 +59,22 @@ const todoSlice = createSlice({
       }
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchTodosData.fulfilled, (state, action) => {
-      if (!action.payload) return;
-
-      state.todos = action.payload;
-    });
+  extraReducers(builder) {
+    builder
+      .addCase(fetchTodosData.pending, (state) => {
+        state.fetchStatus = 'loading';
+      })
+      .addCase(fetchTodosData.fulfilled, (state, action) => {
+        state.fetchStatus = 'success';
+        state.todos = state.todos.concat(action.payload);
+      })
+      .addCase(fetchTodosData.rejected, (state) => {
+        state.fetchStatus = 'error';
+      });
   },
 });
 
-export const { addTodo, setFilter, setIsCompleted, clearCompleted } =
+export const { addTodo, setFilter, toggleCompleted, clearCompleted } =
   todoSlice.actions;
 
 export { fetchTodosData };

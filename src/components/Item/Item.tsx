@@ -5,7 +5,7 @@ import './Item.scss';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 
 import { useAppDispatch } from '../../hooks';
-import { setIsCompleted } from '../../redux/reducers/todoReducer';
+import { toggleCompleted } from '../../redux/reducers/todoReducer';
 import type { Todo } from '../../types';
 
 interface ItemProps {
@@ -19,8 +19,8 @@ const Item: React.FC<ItemProps> = ({ todo }) => {
   const IconComponent = completed ? FaRegCheckCircle : FaRegCircle;
 
   const handleClick = useCallback(() => {
-    dispatch(setIsCompleted({ id, completed: !completed }));
-  }, [dispatch, id, completed]);
+    dispatch(toggleCompleted(id));
+  }, [dispatch, id]);
 
   return (
     <div className='todo-item'>
