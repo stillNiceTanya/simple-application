@@ -1,21 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchTodos } from '../../api';
-import { Todo } from '../../types';
+import type { Filter, Todo } from '../types';
 
-export type Filter = 'all' | 'active' | 'completed';
-
-interface TodoState {
+type TodosState = {
   todos: Todo[];
   currentFilter: Filter;
   fetchStatus: 'idle' | 'loading' | 'success' | 'error';
-}
+};
 
-interface SetCompletedPayload {
-  id: number | string;
-}
-
-const initialState: TodoState = {
+const initialState: TodosState = {
   todos: [],
   currentFilter: 'all',
   fetchStatus: 'idle',

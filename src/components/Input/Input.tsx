@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react';
-import './Input.scss';
 import { useAppDispatch } from '../../hooks';
 import { useState } from 'react';
 import { addTodo } from '../../redux/reducers/todoReducer';
 
-const Input: React.FC = () => {
+import './Input.scss';
+
+const Input = () => {
   const dispatch = useAppDispatch();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string>('');
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,17 +27,15 @@ const Input: React.FC = () => {
   );
 
   return (
-    <>
-      <input
-        type='text'
-        className='todo-input'
-        placeholder='What needs to be done?'
-        value={value}
-        autoFocus
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
-    </>
+    <input
+      type='text'
+      className='todo-input'
+      placeholder='What needs to be done?'
+      value={value}
+      autoFocus
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+    />
   );
 };
 

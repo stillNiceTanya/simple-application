@@ -1,10 +1,10 @@
-import './App.scss';
-import React from 'react';
 import Footer from './components/Footer/Footer';
 import Input from './components/Input/Input';
 import List from './components/List/List';
 
-const App: React.FC = () => {
+import './App.scss';
+
+const App = () => {
   return (
     <>
       <header className='header__title'>todos Jampad</header>

@@ -1,13 +1,13 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
-import type { Filter } from '../../redux/reducers/todoReducer';
-
-import './Footer.scss';
-
+import type { Filter } from '../../redux/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setFilter, clearCompleted } from '../../redux/reducers/todoReducer';
 
-const Footer: React.FC = () => {
+import './Footer.scss';
+
+
+const Footer = () => {
   const dispatch = useAppDispatch();
 
   const todosCount = useAppSelector((state) => {

@@ -1,18 +1,18 @@
-import React, { useCallback } from 'react';
-
-
-import './Item.scss';
+import { useCallback } from 'react';
 import { FaRegCheckCircle, FaRegCircle } from 'react-icons/fa';
 
 import { useAppDispatch } from '../../hooks';
 import { toggleCompleted } from '../../redux/reducers/todoReducer';
-import type { Todo } from '../../types';
+import type { Todo } from '../../redux/types';
 
-interface ItemProps {
+import './Item.scss';
+
+
+type ItemProps = {
   todo: Todo;
 }
 
-const Item: React.FC<ItemProps> = ({ todo }) => {
+const Item = ({ todo }: ItemProps) => {
   const { id, title, completed } = todo;
   const dispatch = useAppDispatch();
 
@@ -23,11 +23,10 @@ const Item: React.FC<ItemProps> = ({ todo }) => {
   }, [dispatch, id]);
 
   return (
-    <div className='todo-item'>
+    <div className='todo-item' onClick={handleClick}>
       <div className='todo-icon__container'>
         <IconComponent
           className='todo-item__icon'
-          onClick={handleClick}
         />
       </div>
       <span

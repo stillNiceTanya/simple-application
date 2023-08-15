@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Todo } from '../redux/types';
 
 async function fetchTodos({
   offset,
@@ -6,7 +7,7 @@ async function fetchTodos({
 }: {
   offset: number;
   limit: number;
-}): Promise<any> {
+}): Promise<Todo[]> {
   try {
     const { data, status } = await axios.get(
       'https://jsonplaceholder.typicode.com/users/1/todos',
@@ -24,12 +25,9 @@ async function fetchTodos({
 
     return data;
   } catch (error: unknown) {
-    // TODO: обработать ошибку
     console.error('Error fetching TODO list:', error);
 
-    if (error instanceof Error) {
-      throw error;
-    }
+    return Promise.reject(error);
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { fetchTodosData } from '../../redux/reducers/todoReducer';
 import { useAppDispatch } from '../../hooks';
@@ -8,7 +8,7 @@ import Item from '../Item/Item';
 
 import { useAppSelector } from '../../hooks';
 
-const List: React.FC = () => {
+const List = () => {
   const fetchStatus = useAppSelector((state) => state.todos.fetchStatus);
 
   const currentTodos = useAppSelector((state) => {
