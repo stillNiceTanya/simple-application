@@ -5,3 +5,5 @@ export type Todo = {
 };
 
 export type Filter = 'all' | 'active' | 'completed';
+
+export type FetchStatus = 'idle' | 'loading' | 'success' | 'error';

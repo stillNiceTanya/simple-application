@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchTodos } from '../../api';
-import type { Filter, Todo } from '../types';
+import type { FetchStatus, Filter, Todo } from '../types';
 
 type TodosState = {
   todos: Todo[];
   currentFilter: Filter;
-  fetchStatus: 'idle' | 'loading' | 'success' | 'error';
+  fetchStatus: FetchStatus;
 };
 
 type UpdateTodoPayload = {
@@ -14,7 +14,7 @@ type UpdateTodoPayload = {
   title: Todo['title'];
 };
 
-const initialState: TodosState = {
+export const initialState: TodosState = {
   todos: [],
   currentFilter: 'all',
   fetchStatus: 'idle',

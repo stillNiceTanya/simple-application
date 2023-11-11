@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { fetchTodosData } from '../../redux/reducers/todoReducer';
 import { useAppDispatch } from '../../hooks';
 
-import Item from '../Item/Item';
+import { Item } from '../Item';
 import { useAppSelector } from '../../hooks';
 
 import styles from './List.module.css';
@@ -14,12 +14,12 @@ const List = () => {
   const currentTodos = useAppSelector((state) => {
     const { todos, currentFilter } = state.todos;
     switch (currentFilter) {
-    case 'active':
-      return todos.filter((todo) => !todo.completed);
-    case 'completed':
-      return todos.filter((todo) => todo.completed);
-    default:
-      return todos;
+      case 'active':
+        return todos.filter((todo) => !todo.completed);
+      case 'completed':
+        return todos.filter((todo) => todo.completed);
+      default:
+        return todos;
     }
   });
 
@@ -32,13 +32,11 @@ const List = () => {
   }, [fetchStatus, dispatch]);
 
   if (fetchStatus === 'loading') {
-    // TODO: Добавить компонент загрузки
-    return <div>Loading...</div>
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   if (fetchStatus === 'error') {
-    // TODO: Добавить компонент ошибки
-    return <div>Error</div>
+    return <div className={styles.error}>Loading error</div>;
   }
 
   return (
@@ -46,9 +44,7 @@ const List = () => {
       {currentTodos.map((todo) => {
         return (
           <li key={todo.id}>
-            <Item
-              todo={todo}
-            />
+            <Item todo={todo} />
           </li>
         );
       })}
